@@ -6,6 +6,8 @@ import { TextoDados } from '../../components/Texto/Dados';
 import Titulo from '../../components/Texto/Titulo';
 import InputSelect from '../../components/Inputs/Select'
 import BlocoImagens from '../../components/Imagens/Bloco'
+import Voltar from '../../components/Links/Voltar'
+
 
 
 class DetalhesDoProduto extends Component {
@@ -51,7 +53,7 @@ class DetalhesDoProduto extends Component {
                         <InputValor
                             value={nome} noStyle
                             name="Nome"
-                            onChange={(ev) => this.setState({ nome: ev.target.value })}
+                            handleSubmit={(valor) => this.setState({ nome: valor })}
                         />
                     )} />
 
@@ -109,6 +111,7 @@ class DetalhesDoProduto extends Component {
 
         return (
             <div className='detalhes-do-Produto'>
+                <Voltar path="/produtos"/>
                 {this.renderCabecalho()}
                 <br />
                 <div className='flex horizontal'>

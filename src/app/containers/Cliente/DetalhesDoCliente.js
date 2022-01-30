@@ -1,6 +1,7 @@
 import React from "react";
 import ButtonSimples from "../../components/Button/Simples";
 import InputValor from "../../components/Inputs/InputValor";
+import Voltar from "../../components/Links/Voltar";
 import { TextoDados } from "../../components/Texto/Dados";
 import Titulo from "../../components/Texto/Titulo";
 
@@ -144,6 +145,7 @@ class DetalhesDoCliente extends React.Component {
     render() {
         return (
             <div className="DetalhesDoCliente">
+                <Voltar path="/clientes"/>
                 {this.renderCabecalho()}
                 <div className="flex horizontal">
                     <div className="flex-1 flex vertical">
