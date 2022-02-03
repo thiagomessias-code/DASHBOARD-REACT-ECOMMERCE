@@ -7,6 +7,7 @@ import Checkbox from '../../components/Inputs/Checkbox'
 import Button from '../../components/Button/Simples'
 import {connect} from 'react-redux'
 import * as actions from '../../actions'
+import {api, versao} from '../../config'
 
 class Login extends Component {
 
@@ -20,8 +21,8 @@ class Login extends Component {
     onChangeCheckbox = (field) => this.setState({ [field]: !this.state[field] });
 
     handleLogin() {
-        const { email, senha: password } = this.state;
-        this.props.handleLogin({ email, password }, () => {
+        const { email, senha: password, opcaoLembrar } = this.state;
+        this.props.handleLogin({ email, password, opcaoLembrar}, () => {
             alert("Aviso")
         })
     }
@@ -58,13 +59,18 @@ class Login extends Component {
                                 label="Lembrar?" />
                         </div>
                         <div className="flex-1 flex flex-end">
-                            <Link to="/recuperar-senha"><small>Esqueceu sua senha?</small></Link>
+                            {/*<Link to="/recuperar-senha"><small>Esqueceu sua senha?</small></Link>*/}
+                            <a href={`${api}/${versao}/api/usuarios/recuperar-senha`}>
+                                <small>
+                                    Esqueceu a senha?
+                                </small>
+                            </a>
                         </div>
                     </div>
                     <br />
                     <br />
                     <div className=" flex flex-center">
-                        <Button type="success" rota="/" label="Entrar" onClick={() => this.handleLogin()} />
+                        <Button type="success"  label="Entrar" onClick={() => this.handleLogin()} />
                     </div>
                 </div>
             </div>
