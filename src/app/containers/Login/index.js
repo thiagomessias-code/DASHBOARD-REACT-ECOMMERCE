@@ -1,35 +1,50 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 import Titulo from '../../components/Texto/Titulo'
 import Input from '../../components/Inputs/Simples'
 import Checkbox from '../../components/Inputs/Checkbox'
 import Button from '../../components/Button/Simples'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import * as actions from '../../actions'
-import {api, versao} from '../../config'
+import { api, versao } from '../../config'
+import Alert from '../../components/Alert/Danger'
 
 class Login extends Component {
 
     state = {
         email: "",
         senha: "",
-        opcaoLembrar: true
+        opcaoLembrar: true,
+        erros: {}
     }
 
-    onChangeInput = (field, ev) => this.setState({ [field]: ev.target.value })
+    onChangeInput = (field, ev) => {
+        this.setState({ [field]: ev.target.value })
+        this.validation();
+    }
     onChangeCheckbox = (field) => this.setState({ [field]: !this.state[field] });
 
     handleLogin() {
         const { email, senha: password, opcaoLembrar } = this.state;
-        this.props.handleLogin({ email, password, opcaoLembrar}, () => {
-            alert("Aviso")
+        if(!this.validation()) return;
+        this.props.handleLogin({ email, password, opcaoLembrar }, (error) => {
+           this.setState({ erros: {...this.state.erros, form: error} });
         })
+    }
+
+    validation() {
+        const { email, senha } = this.state;
+        const erros = {}
+        if (!email) erros.email = "Preencha com o seu email."
+        if (!senha) erros.senha = "Preencha com o sua senha."
+        this.setState({erros})
+        //console.log(erros)
+        return !(Object.keys(erros).length > 0)
     }
 
 
     render() {
-        const { email, senha, opcaoLembrar } = this.state;
+        const { email, senha, opcaoLembrar, erros } = this.state;
         return (
             <div className="Login flex flex-center">
                 <div className="Card">
@@ -39,16 +54,20 @@ class Login extends Component {
                     </div>
                     <br />
                     <br />
+
+                    <Alert error={erros.form}/>
                     <Input
                         label=" E-mail"
                         value={email}
                         type="email"
+                        erros={erros.email}
                         onChange={(ev) => this.onChangeInput("email", ev)}
                     />
                     <Input
                         label=" Senha "
                         value={senha}
                         type="password"
+                        erros={erros.senha}
                         onChange={(ev) => this.onChangeInput("senha", ev)}
                     />
                     <div className="flex">
@@ -70,7 +89,7 @@ class Login extends Component {
                     <br />
                     <br />
                     <div className=" flex flex-center">
-                        <Button type="success"  label="Entrar" onClick={() => this.handleLogin()} />
+                        <Button type="success" label="Entrar" onClick={() => this.handleLogin()} />
                     </div>
                 </div>
             </div>
@@ -79,4 +98,4 @@ class Login extends Component {
 }
 
 
-export default connect(null, actions) (Login);
+export default connect(null, actions)(Login);

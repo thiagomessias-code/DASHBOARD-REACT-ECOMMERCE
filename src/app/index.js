@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Provider } from 'react-redux';
 import store from './store'
-import {HashRouter as Router, Route} from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 
 import base from './containers/HOC/Base'
 import noAuth from "./containers/HOC/NoAuth";
@@ -35,37 +35,37 @@ import ResetarSenha from './containers/RecuperarSenha/ResetarSenha';
 
 class App extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     initApp();
   }
   render() {
     return (
       <Provider store={store}>
         <Router>
-       <Route path={'/'} exact component={base(Pedidos)}/>
-       <Route path={'/pedido/:id'} exact  component={base(Pedido)}/>
+          <Route path={'/'} exact component={base(Pedidos)} />
+          <Route path={'/pedido/:id'} exact component={base(Pedido)} />
 
-       <Route path={'/clientes'} exact component={base(Clientes)}/>
-       <Route path={'/cliente/:email'} component={base(Cliente)}/>
+          <Route path={'/clientes'} exact component={base(Clientes)} />
+          <Route path={'/cliente/:email'} component={base(Cliente)} />
 
-       <Route path={'/categorias'} component={base(Categorias)}/>
-       <Route path={'/categoria/:id'} component={base(Categoria)}/>
+          <Route path={'/categorias'} component={base(Categorias)} />
+          <Route path={'/categoria/:id'} component={base(Categoria)} />
 
-       <Route path={'/produtos'} component={base(Produtos)}/>
-       <Route path={'/produto/:id'} component={base(Produto)}/>
-       
-       <Route path={'/avaliacoes/:id'} component={base(Avaliacoes)}/>
-       <Route path={'/avaliacao/:id'} component={base(Avaliacao)}/>
+          <Route path={'/produtos'} component={base(Produtos)} />
+          <Route path={'/produto/:id'} component={base(Produto)} />
 
-       <Route path={'/configuracoes'} component={base(Configuracoes)}/>
+          <Route path={'/avaliacoes/:id'} component={base(Avaliacoes)} />
+          <Route path={'/avaliacao/:id'} component={base(Avaliacao)} />
 
-       <Route path={'/perfil'} component={base(Perfil)}/>
-       
-      
-       
-       <Route path={'/login'}  component={noAuth(Login)}/>
-       <Route path={'/recuperar-senha'}  component={noAuth(RecuperarSenha)}/>
-       <Route path={'/resetar-senha/:token'}  component={noAuth(ResetarSenha)}/>
+          <Route path={'/configuracoes'} component={base(Configuracoes)} />
+
+          <Route path={'/perfil'} component={base(Perfil)} />
+
+
+
+          <Route path={'/login'} component={noAuth(Login)} />
+          <Route path={'/recuperar-senha'} component={noAuth(RecuperarSenha)} />
+          <Route path={'/resetar-senha/:token'} component={noAuth(ResetarSenha)} />
         </Router>
       </Provider>
     )

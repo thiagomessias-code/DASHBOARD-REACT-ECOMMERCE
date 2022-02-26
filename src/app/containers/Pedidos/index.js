@@ -4,19 +4,43 @@ import Pesquisa from '../../components/Inputs/Pesquisa';
 import Tabela from '../../components/Tabela/Simples';
 import Paginacao from '../../components/Paginacao/Simples';
 import moment from 'moment';
+import * as actions from '../../actions/pedidos'
+import{connect} from "react-redux";
 
 class Pedidos extends Component {
     state = {
         pesquisa: "",
-        atual: 0
+        atual: 0,
+        limit: 5
     }
+    getPedidos() {
+        const { atual, limit } = this.state;
+        const { usuario } = this.state;
+        if (!usuario) return null;
+        const loja = usuario.loja;
+        this.props.getPedidos(atual, limit, loja)
+    }
+    componentDidMount() {
+        this.getPedidos();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!this.props.usuario && prevProps.usuario) this.getPedidos();
+    }
+
+
+
     onChange = (ev) => this.setState({ pesquisa: ev.target.value })
-    changeNumeroAtual = (atual) => this.setState({ atual })
-    
+
+    changeNumeroAtual = (atual) =>
+        this.setState({ atual }, () => {
+            this.getPedidos();
+        })
+
     render() {
         const { pesquisa } = this.state;
 
-       
+
 
         //Dados
         const dados = [
@@ -54,22 +78,27 @@ class Pedidos extends Component {
                         placeholder={"Pesquise aqui pelo nome do cliente"}
                         onChange={(ev) => this.onChangePesquisa(ev)}
                         onClick={() => alert("Pesquisar")}
-                         />
+                    />
                     <br />
                     <Tabela
                         cabecalho={["Cliente", "Valor Total", "Data", "Situacao"]}
                         dados={dados}
                     />
                     <br />
-                    <Paginacao 
-                    atual={this.state.atual} 
-                    total={120} 
-                    limite={20}
-                     onClick={(numeroAtual) => this.changeNumeroAtual(numeroAtual)} />
+                    <Paginacao
+                        atual={this.state.atual}
+                        total={this.props.pedidos ? this.props.total : 0}
+                        limite={20}
+                        onClick={(numeroAtual) => this.changeNumeroAtual(numeroAtual)} />
                 </div>
             </div>
         )
     }
 }
 
-export default Pedidos
+const mapStateToProps = state => ({
+    pedios: state.pedido.pedidos,
+    usuario: state.auth.usuario
+})
+
+export default connect(mapStateToProps, actions)(Pedidos);

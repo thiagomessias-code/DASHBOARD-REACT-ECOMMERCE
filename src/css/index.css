@@ -72,10 +72,11 @@ body {
   padding: 10px 20px;
   height: 21px;
 }
-.Barra-Topo a, .Barra-Topo span {
+.Barra-Topo a , .Barra-Topo  span {
   color: var(--cor-branca);
   text-decoration: none;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 .Menu {
@@ -294,6 +295,14 @@ table.simples th:last-child{
   align-items: center;
   padding: 5px;
 }
+.input-error {
+  border: 1px solid red;
+  box-shadow: 0 0 5px rgb(243, 56, 56);
+}
+.small-danger {
+color: rgb(243, 56, 56);
+font-size: 12px;
+}
 
 /* LOGIN*/
 
@@ -316,6 +325,23 @@ table.simples th:last-child{
   color: var(--cor-tema-claro);
 }
 
+.alert {
+  width: calc(100%-20px);
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid var(--cor-cinza-medio);
+  background-color: var(--cor-cinza-claro);
+  color: var(--cor-cinza-claro);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.alert-danger {
+  border: 2px solid var(--cor-terciaria);
+  background-color: rgb(248, 151, 151);
+  color: rgb(58, 33, 33);
+
+}
 /* RECUPERAR SENHA*/
 
 .Recuperar-Senha .Card {
